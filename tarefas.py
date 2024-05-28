@@ -54,23 +54,23 @@ Você tem {diferenca} horas para concluir sua atividade!'''
     def concluir_tarefa(self):
 
         selecionar_tarefa = input('Digite a tarefa que você concluiu:')
-        for tarefa in self.tarefas_a_fazer:
-            if tarefa['Tarefa'] == selecionar_tarefa:
-                self.tarefas_realizadas.append(f' Concluiu as seguintes tarefas: {tarefa['Tarefa']}')
-                tarefa.clear
+        for i, items in enumerate(self.tarefas_a_fazer):
+            if items['Tarefa'] == selecionar_tarefa:
+                self.tarefas_realizadas.append(items['Tarefa'])
+                del self.tarefas_a_fazer[i]
                 return 'Tarefa finalizada com sucesso, parabéns <3'
-            else:
-                return 'Tarefa não encontrada'
+            
+        return 'Tarefa não encontrada'
             
     def remover_tarefa(self):
 
         remover = input('Qual tarefa deseja remover:')
         for item in self.tarefas_a_fazer:
             if item['Tarefa'] == remover:
-                item.clear
-                return f'Tarefa {remover} removida com sucesso, esta é sua lista atual de tarefas:\n {self.tarefas_a_fazer}'
-            else:
-                return f'Tarefa {remover} não encontrada.'
+                item.clear()
+                return f'Tarefa {remover} removida com sucesso.'
+            
+        return f'Tarefa {remover} não encontrada.'
             
     def visualizar_tarefa(self):
         selecione_lista = int(input('''
@@ -78,19 +78,11 @@ Digite [1] para visualizar tarefas a fazer
 Digite [2] para visualizar as que foram realizadas                                    
 Digite sua opção:'''))
         if selecione_lista == 1:
-            return self.tarefas_a_fazer
+            for tarefa in self.tarefas_a_fazer:
+                print(tarefa['Tarefa'])
+            return 'Fim.'
 
         elif selecione_lista == 2:
-            return self.tarefas_realizadas
-        
-        else:
-            return 'Digite de acordo com as opções!'
-        
-
-
-
-x = cotidiano()
-
-print(x.adicionar_tarefa())
-print(x.concluir_tarefa())
-print(x.tarefas_realizadas)
+            for item in self.tarefas_realizadas:
+                print(item)
+            return 'Fim.'
